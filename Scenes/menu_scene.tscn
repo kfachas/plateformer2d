@@ -1,0 +1,154 @@
+[gd_scene load_steps=10 format=3 uid="uid://1357m770ri7o"]
+
+[ext_resource type="Script" uid="uid://bwpwloa5ql8pm" path="res://Scripts/main_menu.gd" id="1_kt0tg"]
+[ext_resource type="Texture2D" uid="uid://b23qai7sxdm4e" path="res://Assets/Hello.png" id="2_s0fe0"]
+[ext_resource type="Script" uid="uid://5d2m5isyhx87" path="res://Scripts/audio_control.gd" id="3_s0fe0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_853f1"]
+bg_color = Color(0.768627, 0.513726, 0.611765, 0.698039)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8saeu"]
+bg_color = Color(0.850455, 0.438788, 0.670799, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.215686)
+shadow_size = 5
+shadow_offset = Vector2(0, -0.585)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ghw46"]
+texture = ExtResource("2_s0fe0")
+modulate_color = Color(1, 1, 1, 0.262745)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_kt0tg"]
+color = Color(1, 1, 1, 1)
+thickness = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_s0fe0"]
+color = Color(0, 0.207427, 1, 1)
+thickness = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_w4cdh"]
+color = Color(0.0460029, 0.283837, 1, 1)
+thickness = 6
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kt0tg")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+
+[node name="MainButtons" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.5
+offset_top = -60.5
+offset_right = 118.5
+offset_bottom = 60.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 9
+
+[node name="StartGame" type="Button" parent="MainButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/hover = SubResource("StyleBoxFlat_853f1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8saeu")
+text = "Start Game"
+
+[node name="Settings" type="Button" parent="MainButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/hover = SubResource("StyleBoxFlat_853f1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8saeu")
+text = "Options"
+
+[node name="Exit" type="Button" parent="MainButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/hover = SubResource("StyleBoxFlat_853f1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8saeu")
+text = "Exit"
+
+[node name="Background" type="Panel" parent="."]
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -2.0
+offset_right = -1.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ghw46")
+
+[node name="Options" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -266.5
+offset_top = -160.5
+offset_right = 266.5
+offset_bottom = 160.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackButton" type="Button" parent="Options"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -118.5
+offset_top = -47.5
+offset_right = 118.5
+offset_bottom = -23.5
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_styles/hover = SubResource("StyleBoxFlat_853f1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8saeu")
+text = "Exit"
+
+[node name="AudioControl" type="HSlider" parent="Options"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -164.0
+offset_top = 59.5
+offset_right = 164.0
+offset_bottom = 75.5
+grow_horizontal = 2
+theme_override_styles/slider = SubResource("StyleBoxLine_kt0tg")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_s0fe0")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_w4cdh")
+script = ExtResource("3_s0fe0")
+
+[connection signal="pressed" from="MainButtons/StartGame" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MainButtons/Settings" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="MainButtons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Options/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="Options/AudioControl" to="Options/AudioControl" method="_on_value_changed"]
